@@ -42,7 +42,7 @@ const GRID_CLASS: Record<TabId, string> = {
   health: 'grid-cols-1 sm:grid-cols-2',
   agents: 'grid-cols-1 lg:grid-cols-2',
   profiles: 'grid-cols-1',
-  'token-costs': 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
+  'token-costs': 'grid-cols-1 lg:grid-cols-2',
 }
 
 export default function App() {

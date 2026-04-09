@@ -140,7 +140,7 @@ export default function TokenCostsPanel() {
       {/* Per-model breakdown */}
       {byModel.length > 0 && (
         <Panel title={`By Model — ${byModel.length} models`} className="col-span-full">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
             {byModel.map((m: any) => (
               <ModelCard key={m.model} m={m} />
             ))}
