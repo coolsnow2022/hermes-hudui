@@ -24,7 +24,6 @@ _SESSION_ID_RE = re.compile(r'^session_id:\s+\S+')
 _HEADER_RE = re.compile(r'[╭╰][\s─]*[◉◈●]?\s*(MOTHER|HERMES|hermes)\s*[─╮╯]')
 # Hermes system warning lines (context compression, etc.) — not part of the model response
 _WARNING_RE = re.compile(r'^⚠')
-_COMPRESSION_WARNING_RE = re.compile(r'(compression model|compression threshold|auxiliary:|compression:|threshold:\s+[\d.]+)', re.IGNORECASE)
 
 
 class ChatNotAvailableError(Exception):
@@ -174,10 +173,9 @@ class ChatEngine:
                 return True
             if _BOX_DRAWING_RE.match(stripped):
                 return True
-            # Hermes system warnings (context compression, etc.)
+            # Hermes system warnings (context compression, etc.) — first line only
+            # Multi-line warning blocks are handled by in_warning_block state in run_subprocess
             if _WARNING_RE.match(stripped):
-                return True
-            if _COMPRESSION_WARNING_RE.search(stripped):
                 return True
             return False
 
@@ -193,17 +191,30 @@ class ChatEngine:
 
                 # Stream stdout line by line, filtering decoration
                 started_content = False
+                in_warning_block = False
                 for line in iter(process.stdout.readline, b""):
                     if streamer._stopped.is_set():
                         break
                     text = line.decode("utf-8", errors="replace")
+                    stripped = text.strip()
 
-                    # Skip decoration lines
+                    # Detect start of a multi-line warning block (⚠ ...)
+                    if _WARNING_RE.match(stripped):
+                        in_warning_block = True
+                        continue
+
+                    # A blank line ends the warning block
+                    if in_warning_block:
+                        if not stripped:
+                            in_warning_block = False
+                        continue
+
+                    # Skip single-line decoration (box drawing, headers, session id)
                     if _is_decoration_line(text):
                         continue
 
                     # Skip leading empty lines before content starts
-                    if not started_content and not text.strip():
+                    if not started_content and not stripped:
                         continue
 
                     started_content = True
