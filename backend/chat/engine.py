@@ -271,9 +271,7 @@ class ChatEngine:
 
                     started_content = True
 
-                    # Emit the line for streaming
-                    for char in text:
-                        streamer.emit_token(char)
+                    streamer.emit_token(text)
 
                 process.wait()
 

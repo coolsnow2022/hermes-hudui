@@ -12,12 +12,13 @@ from .serialize import to_dict
 
 router = APIRouter()
 
+_HERMES_BIN: str | None = shutil.which("hermes")
+
 
 def _hermes() -> str:
-    path = shutil.which("hermes")
-    if not path:
+    if not _HERMES_BIN:
         raise HTTPException(status_code=503, detail="hermes CLI not found")
-    return path
+    return _HERMES_BIN
 
 
 def _run(action: str, job_id: str) -> None:

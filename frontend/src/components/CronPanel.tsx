@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useApi } from '../hooks/useApi'
 import Panel from './Panel'
-import { timeAgo } from '../lib/utils'
+import { timeAgo, truncate } from '../lib/utils'
 
 async function cronAction(jobId: string, action: string, method = 'POST') {
   const url = action ? `/api/cron/${jobId}/${action}` : `/api/cron/${jobId}`
@@ -58,7 +58,6 @@ export default function CronPanel() {
 
           return (
             <div key={job.id} className="p-3" style={{ background: 'var(--hud-bg-panel)', border: '1px solid var(--hud-border)' }}>
-              {/* Header row */}
               <div className="flex items-center gap-2 mb-2">
                 <span className="w-2 h-2 rounded-full shrink-0"
                   style={{ background: isActive ? 'var(--hud-success)' : 'var(--hud-text-dim)' }} />
@@ -73,7 +72,6 @@ export default function CronPanel() {
                   {job.state || 'unknown'}
                 </span>
 
-                {/* Action buttons */}
                 <div className="ml-auto flex items-center gap-1.5">
                   {!isCompleted && (
                     isPaused ? (
@@ -110,12 +108,12 @@ export default function CronPanel() {
                   {isConfirming ? (
                     <>
                       <button
-                        onClick={() => act(job.id, '', 'DELETE')}
+                        onClick={() => act(job.id, 'delete', 'DELETE')}
                         disabled={!!busy}
                         className="px-2 py-0.5 text-[11px] cursor-pointer disabled:opacity-40"
                         style={{ background: 'var(--hud-error)', color: 'var(--hud-bg-deep)' }}
                       >
-                        {isBusy('') ? '...' : 'Confirm'}
+                        {isBusy('delete') ? '...' : 'Confirm'}
                       </button>
                       <button
                         onClick={() => setConfirming(null)}
@@ -172,8 +170,8 @@ export default function CronPanel() {
               )}
 
               {job.prompt && (
-                <div className="mt-2 text-[13px] truncate" style={{ color: 'var(--hud-text-dim)' }}>
-                  {job.prompt.slice(0, 120)}...
+                <div className="mt-2 text-[13px]" style={{ color: 'var(--hud-text-dim)' }}>
+                  {truncate(job.prompt, 120)}
                 </div>
               )}
 
