@@ -15,6 +15,8 @@ import AgentsPanel from './components/AgentsPanel'
 import ChatPanel from './components/ChatPanel'
 import ProfilesPanel from './components/ProfilesPanel'
 import TokenCostsPanel from './components/TokenCostsPanel'
+import CorrectionsPanel from './components/CorrectionsPanel'
+import PatternsPanel from './components/PatternsPanel'
 
 function TabContent({ tab }: { tab: TabId }) {
   switch (tab) {
@@ -29,6 +31,8 @@ function TabContent({ tab }: { tab: TabId }) {
     case 'chat': return <ChatPanel />
     case 'profiles': return <ProfilesPanel />
     case 'token-costs': return <TokenCostsPanel />
+    case 'corrections': return <CorrectionsPanel />
+    case 'patterns': return <PatternsPanel />
     default: return <DashboardPanel />
   }
 }
@@ -46,6 +50,8 @@ const GRID_CLASS: Record<TabId, string> = {
   chat: 'grid-cols-1',  // Full width for chat
   profiles: 'grid-cols-1',
   'token-costs': 'grid-cols-1 lg:grid-cols-2',
+  corrections: 'grid-cols-1',
+  patterns: 'grid-cols-1 lg:grid-cols-2',
 }
 
 export default function App() {

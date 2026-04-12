@@ -13,6 +13,8 @@ export const TABS = [
   { id: 'chat', label: 'Chat', key: '9' },
   { id: 'profiles', label: 'Profiles', key: '0' },
   { id: 'token-costs', label: 'Costs', key: null },  // Click only, no hotkey
+  { id: 'corrections', label: 'Corrections', key: null },
+  { id: 'patterns', label: 'Patterns', key: null },
 ] as const
 
 export type TabId = typeof TABS[number]['id']
