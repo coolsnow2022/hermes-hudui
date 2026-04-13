@@ -7,6 +7,9 @@ All notable changes to hermes-hudui are documented here.
 ### Added
 - **Chat history persistence** — messages and sessions survive page refresh via localStorage. On server restart, backend sessions are re-created and message history migrated automatically.
 
+### Fixed
+- **Corrections tab — session corrections were always empty** — a dead REGEXP loop in the collector fired a `cursor.execute()` that SQLite can't handle (no built-in REGEXP support), throwing an `OperationalError` that silently aborted the function before the LIKE-based queries could run. Fixed by removing the dead loop, collapsing the 8 individual LIKE queries into one OR query, and moving `conn.close()` into a `finally` block.
+
 ---
 
 ## [0.3.0] — 2026-04-12
