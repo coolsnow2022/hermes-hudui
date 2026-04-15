@@ -2,6 +2,25 @@
 
 All notable changes to hermes-hudui are documented here.
 
+## [Unreleased]
+
+### Added
+- **Sudo tab** — surfaces sudo governance and command history from existing data. Shows approval mode, timeout, command allowlist, and security settings (from `config.yaml`); usage statistics broken down by approved/failed/blocked with a daily sparkline and subcommand type breakdown; scrollable command history extracted from `state.db` tool-output messages via FTS. Closes #14.
+
+---
+
+## [0.4.0] — 2026-04-14
+
+### Added
+- **i18n — English + Chinese language support** — every UI string across all 13 tabs is translated. A language toggle button in the header bar switches instantly; choice persists to localStorage.
+- **Chat responds in selected language** — when the UI is set to Chinese, chat messages include a language hint so the agent responds in Chinese.
+- **Language toggle** — bordered button after the clock in the header, always visible regardless of tab overflow.
+
+### Changed
+- Default host binding changed from `0.0.0.0` to `127.0.0.1` for security (contributed by @shivanraptor).
+
+---
+
 ## [0.3.1] — 2026-04-12
 
 ### Added
