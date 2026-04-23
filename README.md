@@ -28,7 +28,7 @@ source venv/bin/activate && hermes-hudui
 
 ## What's Inside
 
-13 tabs covering everything your agent knows about itself — identity, memory, skills, sessions, cron jobs, projects, health, costs, patterns, corrections, and live chat.
+14 tabs covering everything your agent knows about itself — identity, memory, skills, sessions, cron jobs, projects, health, costs, patterns, corrections, sudo governance, and live chat.
 
 Updates in real-time via WebSocket. No manual refresh needed.
 
@@ -54,7 +54,9 @@ This is the browser companion to [hermes-hud](https://github.com/joeynyc/hermes-
 
 The Web UI is fully standalone and adds features the TUI doesn't have: dedicated Memory, Skills, and Sessions tabs; per-model token cost tracking; command palette; live chat; theme switcher.
 
-If you also have the TUI installed, you can enable it with `pip install hermes-hudui[tui]`.
+If you also have the TUI installed, you can enable it with `pip install 'hermes-hudui[tui]'`.
+
+(Quotes around `'hermes-hudui[tui]'` are required in zsh, where the unquoted `[tui]` is interpreted as a glob pattern. Bash and fish accept the unquoted form, but the quoted form is safe everywhere.)
 
 ## Platform Support
 
